@@ -167,7 +167,6 @@ export default {
       } else {
         this.submitStatus = "PENDING";
         setTimeout(() => {
-          this.recaptcha();
           this.submitStatus = "OK";
           this.$nextTick(() => {
             this.$refs.submitNotice.scrollTop = 0;
@@ -179,11 +178,11 @@ export default {
     async recaptcha() {
       await this.$recaptchaLoaded();
       this.token = await this.$recaptcha("login");
+      this.$recaptchaInstance.hideBadge();
     },
-  },
+  },  
   created() {
-    const recaptcha = this.$recaptchaInstance;
-    recaptcha.hideBadge();
+    this.recaptcha();
   },
 };
 </script>
