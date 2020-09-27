@@ -26,7 +26,7 @@
           </div>
           <div class="col-md-6">
             <div class="contact-form">
-              <form id="contact_me" data-netlify="true" name="COntact Me">
+              <form id="contact_me" name="COntact Me">
                 <div class="contact-form--wrap p-4 p-md-5">
                   <div
                     class="form-group mt-3 wow fadeInUp"
@@ -66,18 +66,38 @@
                       rows="4"
                       class="form-control s/website.css"
                       placeholder="Your message..."
+                      required
                     ></textarea>
                   </div>
-                  <div data-netlify-recaptcha="true"></div>
                   <div
                     class="text-center mt-5 wow fadeInUp"
                     data-wow-duration="1.5s"
                     data-wow-delay=".5s"
                   >
-                    <button type="submit" class="btn">Submit</button>
+                    <button @click="recaptcha" type="submit" class="btn">
+                      Submit
+                    </button>
                   </div>
                 </div>
               </form>
+            </div>
+            <div
+            v-cloak
+              id="noticeF"
+              class="alert alert-primary alert-dismissible fade show d-none"
+              role="alert"
+            >
+              <button
+                type="button"
+                class="close"
+                data-dismiss="alert"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+                <span class="sr-only">Close</span>
+              </button>
+              <strong>Thanks for writing to me!</strong> I will revert to you
+              ASAP.
             </div>
           </div>
         </div>
@@ -87,7 +107,19 @@
 </template>
 
 <script>
+
 export default {
-    
-}
+  name: "ContactForm",
+  props: "",
+  methods: {
+    async recaptcha() {
+      await this.$recaptchaLoaded();
+      const token = await this.$recaptcha("login");
+      alert(token);
+    },
+  },
+};
+
+
 </script>
+

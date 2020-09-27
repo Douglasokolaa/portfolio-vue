@@ -16,11 +16,17 @@
   <link rel="icon" href="<%= BASE_URL %>favicon.ico">
 </head>
 
-<body>
+<body data-spy="scroll" data-target=".navbar">
+
   <noscript>
     <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled.
       Please enable it to continue.</strong>
   </noscript>
+  <div id="preloader" class="preloader">
+    <div class="spinner-grow text-light" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
   <div id="app"></div>
   <!-- built files will be auto injected -->
 </body>

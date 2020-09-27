@@ -224,20 +224,3 @@
     }
 
 }(window.jQuery);
-
-$('#contact_me').submit(function (e) {
-    e.preventDefault();
-
-    let notice = '    <div id="noticeF" class="alert alert-primary alert-dismissible fade show" role="alert">'
-    notice += '    <button type="button" class="close" data-dismiss="alert" aria-label="Close">'
-    notice += '        <span aria-hidden="true">&times;</span>'
-    notice += '        <span class="sr-only">Close</span>'
-    notice += '    </button>'
-    notice += '    <strong>Thanks for writing to me!</strong> I will respond ASAP.'
-    notice += '    </div>'
-
-    $('#contact_me').after(notice);
-    $('html, body').animate({
-        scrollTop: $("#noticeF").offset().top
-    }, 2000);
-});
