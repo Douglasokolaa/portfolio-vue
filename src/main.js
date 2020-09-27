@@ -15,7 +15,7 @@ Vue.use(VueReCaptcha, { siteKey: '6Lcrw6MUAAAAAGV34cBCzij3ODxdk7tDlhBAc0gh' })
 
 import Index from './components/Index'
 
-Vue.config.productionTip = false
+Vue.config.productionTip = true
 
 const router = new VueRouter({
   routes:[
@@ -29,6 +29,4 @@ const router = new VueRouter({
 new Vue({
   render: h => h(App),
   router,
-  mounted() {
-  }
 }).$mount('#app')

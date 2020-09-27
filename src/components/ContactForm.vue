@@ -26,7 +26,12 @@
           </div>
           <div class="col-md-6">
             <div class="contact-form">
-              <form id="contact_me" name="COntact Me">
+              <form
+                id="contact_me"
+                name="COntact Me"
+                @submit.prevent="submit"
+                class="needs-validation"
+              >
                 <div class="contact-form--wrap p-4 p-md-5">
                   <div
                     class="form-group mt-3 wow fadeInUp"
@@ -35,10 +40,13 @@
                     <input
                       name="name"
                       id="name"
-                      type="text"
-                      class="form-control s/website.css"
+                      class="form-control form__input s/website.css"
                       placeholder="Your Name*"
-                      required
+                      v-model="name"
+                      :class="{
+                        'is-invalid': $v.name.$error,
+                        'is-valid': $v.name.$dirty && !$v.name.$error,
+                      }"
                     />
                   </div>
                   <div
@@ -49,10 +57,13 @@
                     <input
                       name="email"
                       id="email"
-                      type="email"
                       class="form-control s/website.css"
                       placeholder="Your Email*"
-                      required
+                      v-model="email"
+                      :class="{
+                        'is-invalid': $v.email.$error,
+                        'is-valid': $v.email.$dirty && !$v.email.$error,
+                      }"
                     />
                   </div>
                   <div
@@ -66,7 +77,11 @@
                       rows="4"
                       class="form-control s/website.css"
                       placeholder="Your message..."
-                      required
+                      v-model="message"
+                      :class="{
+                        'is-invalid': $v.message.$error,
+                        'is-valid': $v.message.$dirty && !$v.message.$error,
+                      }"
                     ></textarea>
                   </div>
                   <div
@@ -74,7 +89,11 @@
                     data-wow-duration="1.5s"
                     data-wow-delay=".5s"
                   >
-                    <button @click="recaptcha" type="submit" class="btn">
+                    <button
+                      type="submit"
+                      class="btn"
+                      :disabled="submitStatus == 'OK'"
+                    >
                       Submit
                     </button>
                   </div>
@@ -82,10 +101,11 @@
               </form>
             </div>
             <div
-            v-cloak
+              v-if="submitStatus === 'OK'"
               id="noticeF"
-              class="alert alert-primary alert-dismissible fade show d-none"
+              class="alert alert-info alert-dismissible fade show"
               role="alert"
+              ref="submitNotice"
             >
               <button
                 type="button"
@@ -107,19 +127,64 @@
 </template>
 
 <script>
+import { validationMixin } from "vuelidate";
+import { required, minLength, email } from "vuelidate/lib/validators";
 
 export default {
   name: "ContactForm",
-  props: "",
-  methods: {
-    async recaptcha() {
-      await this.$recaptchaLoaded();
-      const token = await this.$recaptcha("login");
-      alert(token);
+  props: [],
+  data() {
+    return {
+      name: "",
+      email: "",
+      message: "",
+      token: null,
+      submitStatus: "",
+    };
+  },
+  mixins: [validationMixin],
+  validations: {
+    name: {
+      required,
+      minLength: minLength(4),
+    },
+    email: {
+      required,
+      minLength: minLength(4),
+      email,
+    },
+    message: {
+      required,
+      minLength: minLength(20),
     },
   },
+  methods: {
+    submit() {
+      console.log("submit");
+      this.$v.$touch();
+      if (this.$v.$invalid) {
+        this.submitStatus = "ERROR";
+      } else {
+        this.submitStatus = "PENDING";
+        setTimeout(() => {
+          this.recaptcha();
+          this.submitStatus = "OK";
+          this.$nextTick(() => {
+            this.$refs.submitNotice.scrollTop = 0;
+          });
+        }, 500);
+      }
+      this.recaptcha();
+    },
+    async recaptcha() {
+      await this.$recaptchaLoaded();
+      this.token = await this.$recaptcha("login");
+    },
+  },
+  created() {
+    const recaptcha = this.$recaptchaInstance;
+    recaptcha.hideBadge();
+  },
 };
-
-
 </script>
 

@@ -1,10 +1,8 @@
 <template>
-  <div class="page-wrapper">
-    <div id="app">
+  <div id="app" class="page-wrapper">
       <router-view>
         
       </router-view>
-    </div>
   </div>
 </template>
 
@@ -17,6 +15,9 @@ import "./assets/css/vendor.css";
 
 export default {
   name: "App",
+  data() {
+    return {}
+  },
   components: {
   },
   mounted() {

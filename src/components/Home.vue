@@ -215,6 +215,7 @@
 <script>
 
 export default {
+  name: "Home",
   props: ["name"],
 };
 </script>

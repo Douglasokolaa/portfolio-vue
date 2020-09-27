@@ -1,5 +1,10 @@
 <template>
   <div>
+    <div id="preloader" class="preloader">
+      <div class="spinner-grow text-light" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
     <NavBar></NavBar>
     <Home name="Douglas Okolaa"></Home>
     <AboutMe></AboutMe>
@@ -13,7 +18,7 @@
 
 <script>
 // eslint-disable-next-line no-unused-vars
-import $ from 'jquery'
+import $ from "jquery";
 import NavBar from "./NavBar.vue";
 import Home from "./Home.vue";
 import AboutMe from "./About.vue";
@@ -35,6 +40,11 @@ export default {
     Technologies,
     Footer,
   },
+  data() {
+    return {
+      
+    }
+  },
   mounted() {
     this.$loadScript("vendor.min.js").then(() => {
       this.$loadScript(
@@ -45,5 +55,4 @@ export default {
     });
   },
 };
-
 </script>
