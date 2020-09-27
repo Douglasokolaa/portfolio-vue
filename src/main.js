@@ -3,8 +3,6 @@ import VueRouter from 'vue-router'
 import App from './App.vue'
 import LoadScript from 'vue-plugin-load-script'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-// eslint-disable-next-line no-unused-vars
-import $ from 'jquery'
 
 import { VueReCaptcha } from 'vue-recaptcha-v3'
 
@@ -14,14 +12,21 @@ Vue.use(LoadScript)
 Vue.use(VueReCaptcha, { siteKey: '6Lcrw6MUAAAAAGV34cBCzij3ODxdk7tDlhBAc0gh' })
 
 import Index from './components/Index'
+import Error404 from './components/Error404'
 
-Vue.config.productionTip = true
+Vue.config.productionTip = false
 
 const router = new VueRouter({
+  mode: 'history',
   routes:[
     {
+      name: 'home',
       path: '/',
       component: Index
+    },
+    {
+      path: '*',
+      component: Error404
     },
   ] 
 });

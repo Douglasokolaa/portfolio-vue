@@ -1,8 +1,6 @@
 <template>
   <div id="app" class="page-wrapper">
-      <router-view>
-        
-      </router-view>
+    <router-view> </router-view>
   </div>
 </template>
 
@@ -16,11 +14,10 @@ import "./assets/css/vendor.css";
 export default {
   name: "App",
   data() {
-    return {}
+    return {
+    };
   },
-  components: {
-  },
-  mounted() {
-  },
+  components: {},
+  mounted() {},
 };
 </script>

@@ -2,17 +2,35 @@
   <section class="section section-contact" id="contact">
     <div class="contact-Otherdetails">
       <div class="container">
-        <div class="row">
+        <div class="row col-md-12">
           <div class="col-md-6">
             <div class="section-head text-left">
               <span>say Hello</span>
               <h2>Contact</h2>
             </div>
-
             <div class="contact-left">
-              <div class="contact-left--content my-4 pb-3">
-                <h4>My Location</h4>
-                <a target="_blank" href="#">Nigeria</a>
+              <div class="contact-left--content">
+                <h4>Social</h4>
+                <ul class="list-unstyled list-inline">
+                  <li class="list-inline-item">
+                    <a
+                      href="https://ng.linkedin.com/in/douglas-okolaa"
+                      target="_blank"
+                    >
+                      <i class="fab fa-linkedin fa-2x mx-1"></i>
+                    </a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a href="https://twitter.com/douglasokolaa" target="_blank"
+                      ><i class="fab fa-twitter fa-2x mx-1"></i>
+                    </a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a href="https://github.com/douglasokolaa" target="_blank"
+                      ><i class="fab fa-github fa-2x mx-1"></i>
+                    </a>
+                  </li>
+                </ul>
               </div>
               <div class="contact-left--content my-4 pb-3">
                 <h4>Mail</h4>
@@ -103,7 +121,7 @@
             <div
               v-if="submitStatus === 'OK'"
               id="noticeF"
-              class="alert alert-info alert-dismissible fade show"
+              class="alert alert-info alert-dismissible fade show scroll-to-me"
               role="alert"
               ref="submitNotice"
             >
@@ -186,11 +204,12 @@ export default {
         (response) => {
           if (response.ok) {
             this.submitStatus = "OK";
-            this.name = this.message = this.email = '';
+            this.name = this.message = this.email = "";
             this.$v.$reset();
             this.$nextTick(() => {
               this.$refs.submitNotice.scrollTop = 0;
             });
+              this.scrollToElement();
           } else {
             this.submitStatus = "Error";
           }
@@ -209,6 +228,13 @@ export default {
         this.sendEmail(data);
       }
     },
+
+    scrollToElement() {
+    const el = this.$el.getElementsByClassName('scroll-to-me')[0];
+    if (el) {
+      el.scrollIntoView();
+    }
+  }
   },
   created() {
     this.recaptcha();

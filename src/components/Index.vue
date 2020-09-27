@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div id="preloader" class="preloader">
+  <div ref="aa">
+    <div id="preloader" class="preloader" :class="{ loaded: StopPreloader }">
       <div class="spinner-grow text-light" role="status">
         <span class="sr-only">Loading...</span>
       </div>
@@ -42,17 +42,21 @@ export default {
   },
   data() {
     return {
-      
-    }
+      StopPreloader: false,
+    };
   },
   mounted() {
     this.$loadScript("vendor.min.js").then(() => {
       this.$loadScript(
         "https://cdn.jsdelivr.net/npm/simple-parallax-js@5.2.0/dist/simpleParallax.min.js"
       ).then(() => {
-        this.$loadScript("custom.min.js");
+        this.$loadScript("custom.min.js").then(() => {});
       });
     });
   },
+ created() {
+   this.StopPreloader = this.$route.params.StopPreloader
+ }
+
 };
 </script>

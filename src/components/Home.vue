@@ -15,7 +15,7 @@
             <p class="my-4">
               <span
                 class="typed"
-                data-elements="A Fullstack Developer, A Website Manager.,."
+                data-elements="A Fullstack Developer, A Website Manager., A Devop"
               ></span>
             </p>
             <!-- <a href="#" class="btn ">Download CV</a> -->

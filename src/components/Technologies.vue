@@ -29,11 +29,6 @@
           </li>
           <li>
             <div class="key-item">
-              <i class="fab fa-react fa-5x"></i>
-            </div>
-          </li>
-          <li>
-            <div class="key-item">
               <i class="fab fa-vuejs fa-5x"></i>
             </div>
           </li>
@@ -45,6 +40,11 @@
           <li>
             <div class="key-item">
               <i class="fab fa-git fa-5x"></i>
+            </div>
+          </li>
+          <li>
+            <div class="key-item">
+              <i class="fab fa-ubuntu fa-5x"></i>
             </div>
           </li>
         </ul>
