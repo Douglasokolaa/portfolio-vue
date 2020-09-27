@@ -3,6 +3,7 @@ const mailgun = require("mailgun-js");
 const { validateEmail, validateLength } = require('./validations')
 
 exports.handler = (event, context, callback) => {
+  console.log('an' . event);
   if (
     !process.env.CONTACT_EMAIL ||
     !process.env.MAILGUN_DOMAIN ||

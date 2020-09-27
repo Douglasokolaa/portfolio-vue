@@ -159,28 +159,57 @@ export default {
     },
   },
   methods: {
-    submit() {
+    validate() {
       console.log("submit");
       this.$v.$touch();
       if (this.$v.$invalid) {
         this.submitStatus = "ERROR";
+        return false;
       } else {
         this.submitStatus = "PENDING";
-        setTimeout(() => {
-          this.submitStatus = "OK";
-          this.$nextTick(() => {
-            this.$refs.submitNotice.scrollTop = 0;
-          });
-        }, 500);
+        return true;
       }
-      this.recaptcha();
     },
+
     async recaptcha() {
       await this.$recaptchaLoaded();
       this.token = await this.$recaptcha("login");
       this.$recaptchaInstance.hideBadge();
     },
-  },  
+
+    async sendEmail(data) {
+      let fetchData = {
+        method: "POST",
+        body: JSON.stringify(data),
+      };
+      await fetch("/.netlify/functions/send-contact-email", fetchData).then(
+        (response) => {
+          if (response.ok) {
+            this.submitStatus = "OK";
+            this.name = this.message = this.email = '';
+            this.$v.$reset();
+            this.$nextTick(() => {
+              this.$refs.submitNotice.scrollTop = 0;
+            });
+          } else {
+            this.submitStatus = "Error";
+          }
+        }
+      );
+    },
+    submit() {
+      let isvalid = this.validate();
+      if (isvalid) {
+        let data = {
+          name: this.name,
+          message: this.message,
+          email: this.email,
+          token: this.token,
+        };
+        this.sendEmail(data);
+      }
+    },
+  },
   created() {
     this.recaptcha();
   },
